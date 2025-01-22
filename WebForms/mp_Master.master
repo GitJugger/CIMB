@@ -1,0 +1,242 @@
+<%@ Master Language="VB" CodeFile="mp_Master.master.vb" Inherits="WebForms_Master_mp_Master" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+<head runat="server">
+    <title>CIMB Gateway</title>
+    <script type="text/javascript" src="../../../include/common.js"></script>
+    <link href="../include/Styles.css" type="text/css" rel="stylesheet" />
+    
+  
+    <script type="text/javascript" language="JavaScript">
+    <!--
+    var intSeconds = 600;
+    function countDown()
+    { 
+       		if(intSeconds <= 0) 
+		{
+			alert("Your session has been terminated. Please Sign In again.");
+            document.location.href = "PG_Logout.aspx?Timed=True";
+		}
+		intSeconds = intSeconds - 1;
+		window.setTimeout("countDown()",1000);    
+    }
+    function resetCounter()
+    {
+        intSeconds = 600;
+    }
+		
+		var message = "Sorry! We have disabled this function for your Security";
+		///////////////////////////////////
+		function clickIE() {if (document.all) {(message);return false;}}
+		function clickNS(e) {if 
+		(document.layers||(document.getElementById&&!document.all)) {
+		if (e.which==2||e.which==3) {(message);return false;}}}
+		if (document.layers) 
+		{document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;}
+		else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;}
+
+		document.oncontextmenu=new Function("return false")
+		
+    function MM_jumpMenu(targ,selObj,restore){ //v3.0
+      eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+      if (restore) selObj.selectedIndex=0;
+    }
+
+    function MM_jumpMenuBiz(targ,selObj,restore){ //v3.0
+        if (selObj.options[selObj.selectedIndex].value != ""){
+          window.open(selObj.options[selObj.selectedIndex].value, targ);
+          if (restore) selObj.selectedIndex=0;
+        }
+    }
+
+    function MM_openBrWindow(theURL,winName,features) { //v2.0
+      window.open(theURL,winName,features);
+    }
+    
+    function MM_jumpMenuCIMBGroup(targ,selObj,restore){ //v3.0
+    if (selObj.options[selObj.selectedIndex].value != ""){
+      window.open(selObj.options[selObj.selectedIndex].value, targ);
+      if (restore) selObj.selectedIndex=0;
+    }
+}
+    //-->
+    </script>
+	<script type="text/javascript" >
+	 function Direct(Path)
+    {
+        
+		    createCookie('subMenu',document.forms[0].ctl00$hidOpenMenu.value,7);
+
+
+        if (Path.indexOf('?') > 0)
+            Path = Path + '&subMenu=' + document.forms[0].ctl00$hidOpenMenu.value;
+        else
+            Path = Path + '?subMenu=' + document.forms[0].ctl00$hidOpenMenu.value;
+        
+        window.location = Path;
+    }
+   function MOut(ID)
+   {
+      //document.getElementById(ID).style.fontSize ='50pt';
+      document.getElementById(ID).style.filter='';
+      document.getElementById(ID).style.fontFamily='Arial, Helvetica, sans-serif;'
+      
+      //document.all(ID).style.borderStyle='none'
+   }
+   function MOver(ID)
+   {
+      document.getElementById(ID).style.filter='progid:DXImagetransform.Microsoft.Gradient(gradientType=1,startColorStr=lightblue,endColorStr=white)';
+      document.getElementById(ID).style.fontFamily='Arial, Helvetica, sans-serif;'
+
+   }
+	function createCookie(name,value,days) 
+	{
+	    if (days) 
+	    {
+		    var date = new Date();
+		    date.setTime(date.getTime()+(days*24*60*60*1000));
+		    var expires = "; expires="+date.toGMTString();
+	    }
+	    else var expires = "";
+        document.cookie = name + "=" + value + expires + "; path=/;secure;";
+    }
+
+    function readCookie(name) 
+    {
+	    var nameEQ = name + "=";
+	    var ca = document.cookie.split(';');
+	    for(var i=0;i < ca.length;i++) 
+	    {
+		    var c = ca[i];
+		    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	    }
+	    return null;
+    }
+
+    function eraseCookie(name) 
+    {
+	    createCookie(name,"",-1);
+    }
+
+   
+		var message = "Sorry! We have disabled this function for your Security";
+		///////////////////////////////////
+		function clickIE() {if (document.all) {(message);return false;}}
+		function clickNS(e) {if 
+		(document.layers||(document.getElementById&&!document.all)) {
+		if (e.which==2||e.which==3) {(message);return false;}}}
+		if (document.layers) 
+		{document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;}
+		else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;}
+
+		document.oncontextmenu=new Function("return false")
+    </script>
+	<script type="text/javascript">
+		var persistmenu="yes" //"yes" or "no". Make sure each SPAN content contains an incrementing ID starting at 1 (id="sub1", id="sub2", etc)
+		var persisttype="sitewide" //enter "sitewide" for menu to persist across site, "local" for this page only
+
+		if (document.getElementById)
+		{ 
+		    document.write('<style type="text/css">\n')
+		    document.write('.submenu{display: none;FONT-FAMILY: Arial, Helvetica, sans-serif;}\n')
+		    document.write('</style>\n')
+		}
+
+		function SwitchMenu(obj)
+		{
+		    if (document.getElementById(obj) != null)
+		    {
+                if(document.getElementById)
+			    {
+                    var el = document.getElementById(obj);
+			        var ar = document.getElementById("masterdiv")
+			        var menu = document.forms[0].ctl00$hidSubmenu.value.split(",")
+			    
+                    if(el.style.display != "block")
+			        {    
+			            for (var i = 0; i < menu.length; i++)
+			            {
+			                document.getElementById(menu[i]).style.display="none";
+			            }
+			           
+			            el.style.display = "block";
+			            document.forms[0].ctl00$hidOpenMenu.value = document.getElementById(obj).id
+			        }
+			        else
+			        {
+				        el.style.display = "none";eraseCookie('subMenu');
+				        document.forms[0].ctl00$hidOpenMenu.value = '';
+			        }
+		        }
+            }
+        }
+        
+        
+		function get_cookie(Name) { 
+		var search = Name + "="
+		var returnvalue = "";
+		if (document.cookie.length > 0) {
+		offset = document.cookie.indexOf(search)
+		if (offset != -1) { 
+		offset += search.length
+		end = document.cookie.indexOf(";", offset);
+		if (end == -1) end = document.cookie.length;
+		returnvalue=unescape(document.cookie.substring(offset, end))
+		}
+		}
+		return returnvalue;
+		}
+
+		function onloadfunction()
+		{
+            //if (document.forms[0].item("ctl00_hidOpenMenu").value != '')
+		    //    SwitchMenu(document.forms[0].item("ctl00_hidOpenMenu")); 
+		    if (document.forms[0].ctl00$hidOpenMenu.value != '') 
+		    SwitchMenu(document.forms[0].ctl00$hidOpenMenu.value)   
+		    else
+		    {if (readCookie('subMenu')  != null) SwitchMenu(readCookie('subMenu'));}
+		    
+		    /*str = parent.parent.location;
+		    iLen = String(str).length;
+		    str=String(str).substring(iLen, iLen - 14);
+		    if (str != "pg_frames.aspx")
+		    {
+		        window.location = "pg_frames.aspx";
+		    }*/
+		       
+		}
+ //onmousemove="resetCounter();" onchange="resetCounter()" onload="countDown();
+    </script>
+</head>
+<body style="margin: 0px 0px 0px 0px;"  id="body" runat="server">
+    <form id="form1" runat="server" autocomplete="off">
+     <iframe src="../CIMB_WebPage/pg_Header.htm" width="778px" height="163px" frameborder="0" scrolling="no" ></iframe>
+        
+   
+        <table width="774"  cellspacing="0" cellpadding="1">
+            <tr> 
+                <td bgcolor="042B56"> 
+                    <table style="background-color:White;"  border="0" width="772px" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td style="width:70px; vertical-align:top;">
+                            <input type="hidden" id="hidSubmenu" runat="server" />
+                            <input type="hidden" id="hidOpenMenu" runat="server" />
+                            <asp:Label ID="lblMenu1" runat="server"></asp:Label></td>
+                            <td style="vertical-align:top; height:100%; width:700px">
+                            <asp:contentplaceholder id="cphContent" runat="server">
+                            </asp:contentplaceholder></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+       
+       
+      <iframe src="../CIMB_WebPage/pg_Footer.htm" width="778px" height="100%" frameborder="0" scrolling="no"></iframe>
+      </form>
+</body>
+</html>

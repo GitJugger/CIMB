@@ -1,0 +1,67 @@
+﻿#Region "Name Spaces "
+
+Imports System.Web
+Imports MaxGeneric
+Imports System.Web.Services
+Imports System.Collections.Generic
+Imports System.Web.Services.Protocols
+
+#End Region
+
+<WebService([Namespace]:="http://tempuri.org/")> _
+<WebServiceBinding(ConformsTo:=WsiProfiles.BasicProfile1_1)> _
+<System.Web.Script.Services.ScriptService()> _
+Public Class PTPTN_AutoCompleteService
+    Inherits WebService
+
+    Public Sub New()
+    End Sub
+
+#Region "Page Variables "
+
+    Private _WebHelper As New WebHelper()
+    Private _MaxDb As New MaxModule.DataBase()
+
+#End Region
+
+#Region "Get Account Number "
+
+    <WebMethod(EnableSession:=True)> _
+    Public Function GetPTPTNAccountNumber(ByVal prefixText As String, count As Integer) As String()
+
+        'Instances Declaration - Start
+        Dim _DataRow As DataRow
+        Dim AccountNumbers As DataTable = New DataTable
+        'Instances Declaration - Stop
+
+        Try
+
+            'Get the AccountNumber Details from DB - Start
+            AccountNumbers = _MaxDb.GetData(_WebHelper.SqlGetPTPTNAutoBankAccount & HttpContext.Current.Session("SYS_ORGID") & _
+                                 clsGeneric.AddComma() & HttpContext.Current.Session("SYS_GROUPID") & clsGeneric.AddComma() & prefixText)
+            'Get the AccountNumber Details from DB - Stop
+
+            'Declare Array List
+            Dim AccountNumbersList As New List(Of String)(AccountNumbers.Rows.Count)
+
+            'Loop thro each row from Account numbers table - start
+            For Each _DataRow In AccountNumbers.Rows
+
+                'Add the Acc no to List 
+                AccountNumbersList.Add(_DataRow(_WebHelper.ColAccountNumber))
+            Next
+            'Loop thro each row from Account numbers table - stop
+
+            Return AccountNumbersList.ToArray()
+
+        Catch ex As Exception
+            'Catch Exception
+
+            Return Nothing
+        End Try
+
+    End Function
+
+#End Region
+
+End Class
